@@ -53,20 +53,20 @@ teamdna-repo/
 ```markdown
 # [Title]
 
-- **作者**: Name
-- **日期**: YYYY-MM-DD
-- **标签**: tag1, tag2
-- **场景**: One-line description
+- **Author**: Name
+- **Date**: YYYY-MM-DD
+- **Tags**: tag1, tag2
+- **Context**: One-line description
 
-## 问题/背景
+## Problem
 
 What happened.
 
-## 解决方案
+## Solution
 
 How it was solved.
 
-## 注意事项
+## Notes
 
 Caveats and boundaries.
 ```
