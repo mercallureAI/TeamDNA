@@ -47,4 +47,4 @@ Interactively guide user to create and push a knowledge entry.
    git -C <repo_path> push
    ```
 7. If push fails due to conflict, run `git -C <repo_path> pull --rebase` and retry push
-8. After successful push, rebuild index by running the dna-index script (auto-select .sh or .bat based on OS) in the repo directory, then commit and push the updated index
+8. After successful push, rebuild index by running `node <teamdna-dir>/scripts/dna-index.mjs <repo_path>`, then commit and push the updated index

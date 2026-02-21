@@ -8,18 +8,13 @@ One person's lesson learned, the whole team benefits.
 
 - **Storage**: A shared Git repo organized by knowledge type (pitfalls/standards/solutions)
 - **Interface**: 4 Claude Code SKILL commands for search/push/pull/index
-- **Setup**: Shell scripts for initialization, no database or backend needed
+- **Setup**: Node.js scripts for initialization, no database or backend needed
 
 ## Install
 
 ```bash
-# Linux/Mac
 git clone https://github.com/xxx/teamdna.git
-./teamdna/scripts/dna-init.sh https://git.company.com/teamdna-repo.git
-
-# Windows
-git clone https://github.com/xxx/teamdna.git
-teamdna\scripts\dna-init.bat https://git.company.com/teamdna-repo.git
+node teamdna/scripts/dna-init.mjs https://git.company.com/teamdna-repo.git
 ```
 
 The init script will:
