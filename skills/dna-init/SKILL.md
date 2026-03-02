@@ -18,17 +18,20 @@ Guide user through first-time TeamDNA setup: clone knowledge repo and write conf
 - `repo-url` — Team knowledge repository URL (e.g., `https://github.com/your-team/knowledge-repo.git`)
 - `clone-path` — Custom clone location (default: `~/teamdna-repo`)
 
+**Quoting rule:** If `clone-path` contains spaces, wrap it in double quotes (e.g., `"/path/with spaces/teamdna"`).
+
 **Examples:**
 - `/teamdna:dna-init` — Interactive mode (prompts for inputs)
 - `/teamdna:dna-init https://github.com/team/repo.git` — Direct with repo URL
 - `/teamdna:dna-init https://github.com/team/repo.git ~/custom-path` — Direct with custom path
+- `/teamdna:dna-init https://github.com/team/repo.git "/Users/name/My Projects/teamdna"` — Path with spaces (quoted)
 
 ## Steps
 
 1. **Parse arguments** (if provided):
-   - Split arguments by whitespace
+   - Parse arguments using shell-style tokenization: respect double-quoted strings to allow spaces in paths (e.g., `"My Projects/teamdna"`)
    - First argument = repo URL
-   - Second argument = clone path (optional)
+   - Second argument = clone path (optional; must be quoted if it contains spaces)
    - Validate repo URL format (should contain `.git` or be a valid Git URL)
 
 2. **If arguments missing, ask interactively**:
