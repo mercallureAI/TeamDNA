@@ -1,7 +1,7 @@
 ---
 name: dna-index
 description: Rebuild knowledge base index
-user_invocable: true
+user-invokable: true
 ---
 
 # /dna-index — Rebuild Index

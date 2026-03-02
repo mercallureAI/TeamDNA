@@ -1,7 +1,7 @@
 ---
 name: dna-push
 description: Share experience to team knowledge base
-user_invocable: true
+user-invokable: true
 ---
 
 # /dna-push — Share Experience

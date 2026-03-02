@@ -1,7 +1,7 @@
 ---
 name: dna-pull
 description: Pull latest team knowledge base
-user_invocable: true
+user-invokable: true
 ---
 
 # /dna-pull — Pull Latest Knowledge Base

@@ -34,8 +34,10 @@ console.log(`[dna-init] Config written to ${CONFIG_DIR}/config`);
 
 // 3. Install skills
 mkdirSync(SKILLS_DIR, { recursive: true });
-for (const f of readdirSync(join(SCRIPT_DIR, 'skills')).filter(f => f.endsWith('.md'))) {
-  copyFileSync(join(SCRIPT_DIR, 'skills', f), join(SKILLS_DIR, f));
+for (const f of readdirSync(join(SCRIPT_DIR, 'skills'))) {
+  const skillDir = join(SKILLS_DIR, f);
+  mkdirSync(skillDir, { recursive: true });
+  copyFileSync(join(SCRIPT_DIR, 'skills', f, "SKILL.md"), join(skillDir, "SKILL.md"));
 }
 console.log(`[dna-init] Skills installed to ${SKILLS_DIR}`);
 
