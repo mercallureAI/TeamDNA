@@ -7,7 +7,7 @@ import { homedir } from 'node:os';
 
 const REPO_URL = process.argv[2];
 if (!REPO_URL) {
-  console.log('Usage: node dna-init.mjs <repo-url> [clone-path]');
+  console.log('Usage: node scripts/dna-init.mjs <repo-url> [clone-path]');
   process.exit(1);
 }
 

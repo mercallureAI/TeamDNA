@@ -1,6 +1,7 @@
 ---
 name: dna-init
 description: Initialize TeamDNA knowledge repository for first-time setup
+user-invokable: true
 ---
 
 # /dna-init — Initialize TeamDNA
