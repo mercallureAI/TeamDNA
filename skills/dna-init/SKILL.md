@@ -18,7 +18,7 @@ Guide user through first-time TeamDNA setup: clone knowledge repo and write conf
 
 3. Run initialization script:
    ```bash
-   node scripts/dna-init.mjs <repo-url> [clone-path]
+   node <teamdna-dir>/scripts/dna-init.mjs <repo-url> [clone-path]
    ```
 
 4. Explain what happened:
