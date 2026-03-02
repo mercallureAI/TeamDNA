@@ -1,7 +1,7 @@
 ---
 name: dna-search
 description: Search team knowledge base by keyword
-user_invocable: true
+user-invokable: true
 ---
 
 # /dna-search — Search Team Knowledge Base
