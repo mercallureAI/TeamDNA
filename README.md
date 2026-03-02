@@ -12,7 +12,7 @@ One person's lesson learned, the whole team benefits.
 
 ## Install
 
-```bash
+```text
 # Add the marketplace
 /plugin marketplace add mercallureAI/plugins
 
