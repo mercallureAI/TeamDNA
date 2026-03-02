@@ -11,9 +11,9 @@
  * }
  */
 
-import { existsSync, writeFileSync, mkdirSync } from 'fs';
-import { homedir } from 'os';
-import { join } from 'path';
+import { existsSync, writeFileSync, mkdirSync } from 'node:fs';
+import { homedir } from 'node:os';
+import { join } from 'node:path';
 
 const teamdnaDir = join(homedir(), '.teamdna');
 const configPath = join(teamdnaDir, 'config');
