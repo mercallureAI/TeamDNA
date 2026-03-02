@@ -13,29 +13,31 @@ One person's lesson learned, the whole team benefits.
 ## Install
 
 ```bash
-git clone https://github.com/xxx/teamdna.git
-node teamdna/scripts/dna-init.mjs https://git.company.com/teamdna-repo.git
-```
+# Add the marketplace
+/plugin marketplace add mercallureAI/plugins
 
-The init script will:
-1. Clone your team's knowledge repo
-2. Write config to `~/.teamdna/config`
-3. Install SKILL files to `~/.claude/skills/`
+# Install the plugin
+/plugin install teamdna@mercallure-plugins
+
+# Initialize your team's knowledge repo
+/teamdna:dna-init
+```
 
 ## Usage
 
 In Claude Code, use these commands:
 
-| Command | Description |
-|---------|-------------|
-| `/dna-search <keyword>` | Search knowledge base |
-| `/dna-push` | Share new experience (interactive) |
-| `/dna-pull` | Sync latest knowledge |
-| `/dna-index` | Rebuild search index |
+| Command                         | Description                                  |
+|---------------------------------|----------------------------------------------|
+| `/teamdna:dna-init`             | Initialize knowledge repo (first-time setup) |
+| `/teamdna:dna-search <keyword>` | Search knowledge base                        |
+| `/teamdna:dna-push`             | Share new experience (interactive)           |
+| `/teamdna:dna-pull`             | Sync latest knowledge                        |
+| `/teamdna:dna-index`            | Rebuild search index                         |
 
 ## Knowledge Repo Structure
 
-```
+```text
 teamdna-repo/
 ├── .teamdna/index.md        # Auto-generated index
 ├── pitfalls/                 # Lessons learned
