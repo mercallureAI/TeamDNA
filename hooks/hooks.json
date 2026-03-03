@@ -1,8 +1,15 @@
 {
-  "SessionStart": [
-    {
-      "type": "command",
-      "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/session-start-hook.mjs"
-    }
-  ]
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/session-start-hook.mjs"
+          }
+        ]
+      }
+    ]
+  }
 }

@@ -11,23 +11,20 @@
  * }
  */
 
-import { existsSync, writeFileSync, mkdirSync } from 'node:fs';
-import { homedir } from 'node:os';
-import { join } from 'node:path';
+import { existsSync } from "node:fs";
+import { homedir } from "node:os";
+import { join } from "node:path";
 
-const teamdnaDir = join(homedir(), '.teamdna');
-const configPath = join(teamdnaDir, 'config');
-const promptedPath = join(teamdnaDir, '.prompted');
+const configPath = join(homedir(), ".teamdna", "config");
 
-// Only prompt if config doesn't exist and we haven't prompted before
-if (!existsSync(configPath) && !existsSync(promptedPath)) {
-  console.log('💡 TeamDNA is not initialized. Run /teamdna:dna-init to set up your team knowledge base.');
-
-  // Create marker file to avoid repeated prompts
-  try {
-    mkdirSync(teamdnaDir, { recursive: true });
-    writeFileSync(promptedPath, new Date().toISOString());
-  } catch (err) {
-    // Silently fail if we can't create the marker
-  }
+// If config doesn't exist, instruct Claude to remind user on any TeamDNA skill usage
+if (!existsSync(configPath)) {
+  console.log(
+    [
+      "TeamDNA is NOT initialized.",
+      "Whenever the user triggers any teamdna skill (dna-search, dna-push, dna-pull, dna-index),",
+      "you MUST tell the user: 'TeamDNA is not initialized. Run /teamdna:dna-init to set up your team knowledge base.'",
+      "Do NOT proceed with the skill until the user has run /teamdna:dna-init.",
+    ].join(" "),
+  );
 }
