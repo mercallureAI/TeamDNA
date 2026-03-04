@@ -34,7 +34,7 @@ Uses a two-stage search strategy: keyword pre-filtering + Claude semantic unders
 cat ~/.teamdna/config
 ```
 
-Parse the `repo_path` field. If config doesn't exist, prompt user to run `/teamdna:dna-init`.
+Parse the `repo_path` field. If config doesn't exist, invoke the `/teamdna:dna-init` skill to initialize configuration.
 
 **2. Sync Knowledge Base**
 
@@ -50,7 +50,7 @@ If it fails, prompt user to check network or repository status.
 cat <repo_path>/.teamdna/index.md
 ```
 
-If index doesn't exist, prompt user to run `/teamdna:dna-index`.
+If index doesn't exist, invoke the `/teamdna:dna-index` skill to rebuild the index.
 
 **4. Keyword Matching**
 
@@ -169,15 +169,15 @@ No matching knowledge entries found.
 Suggestions:
 1. Try using more general keywords
 2. Check if spelling is correct
-3. Use `/teamdna:dna-pull` to sync latest knowledge base
+3. Invoke the `/teamdna:dna-pull` skill to sync latest knowledge base
 4. Browse index file to see all available entries:
    cat <repo_path>/.teamdna/index.md
 ```
 
 ## Error Handling
 
-- **Missing Config**: Prompt to run `/teamdna:dna-init`
-- **Missing Index**: Prompt to run `/teamdna:dna-index`
+- **Missing Config**: Invoke the `/teamdna:dna-init` skill to initialize configuration
+- **Missing Index**: Invoke the `/teamdna:dna-index` skill to rebuild the index
 - **Git Sync Failed**: Prompt to check network or repository status
 - **File Read Failed**: Prompt that file may have been deleted, suggest rebuilding index
 

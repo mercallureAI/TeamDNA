@@ -23,8 +23,8 @@ if (!existsSync(configPath)) {
     [
       "TeamDNA is NOT initialized.",
       "Whenever the user triggers any teamdna skill (dna-search, dna-push, dna-pull, dna-index),",
-      "you MUST tell the user: 'TeamDNA is not initialized. Run /teamdna:dna-init to set up your team knowledge base.'",
-      "Do NOT proceed with the skill until the user has run /teamdna:dna-init.",
+      "you MUST tell the user that TeamDNA is not initialized, then invoke the `/teamdna:dna-init` skill to set up the team knowledge base.",
+      "Do NOT proceed with the original skill until dna-init has completed successfully.",
     ].join(" "),
   );
 }
