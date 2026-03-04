@@ -30,8 +30,12 @@ Uses a two-stage search strategy: keyword pre-filtering + Claude semantic unders
 
 **1. Read Configuration**
 
+Read config from platform-specific location:
+- Linux: `$XDG_CONFIG_HOME/teamdna/config` (typically `~/.config/teamdna/config`)
+- macOS/Windows: `~/.teamdna/config`
+
 ```bash
-cat ~/.teamdna/config
+cat <config-path>
 ```
 
 Parse the `repo_path` field. If config doesn't exist, invoke the `/teamdna:dna-init` skill to initialize configuration.

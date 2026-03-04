@@ -12,10 +12,9 @@
  */
 
 import { existsSync } from "node:fs";
-import { homedir } from "node:os";
-import { join } from "node:path";
+import { getConfigPath } from "./paths.mjs";
 
-const configPath = join(homedir(), ".teamdna", "config");
+const configPath = getConfigPath();
 
 // If config doesn't exist, instruct Claude to remind user on any TeamDNA skill usage
 if (!existsSync(configPath)) {

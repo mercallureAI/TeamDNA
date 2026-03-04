@@ -45,6 +45,18 @@ teamdna-repo/
 └── solutions/                # Proven solutions
 ```
 
+## File Locations
+
+TeamDNA follows platform conventions for storing configuration and data:
+
+**Linux (XDG-compliant):**
+- Config: `$XDG_CONFIG_HOME/teamdna/config` (typically `~/.config/teamdna/config`)
+- Data: `$XDG_DATA_HOME/teamdna` (typically `~/.local/share/teamdna`)
+
+**macOS/Windows:**
+- Config: `~/.teamdna/config`
+- Data: `~/.teamdna/repo`
+
 ## Entry Template
 
 ```markdown
