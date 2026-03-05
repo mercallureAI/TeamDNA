@@ -19,22 +19,22 @@ Interactively guide user to create and push a knowledge entry.
 4. Generate MD file using this template:
 
 ```markdown
-# [标题]
+# [Title]
 
-- **作者**: [ask user]
-- **日期**: [today YYYY-MM-DD]
-- **标签**: [comma separated]
-- **场景**: [one line description]
+- **Author**: [ask user]
+- **Date**: [today YYYY-MM-DD]
+- **Tags**: [comma separated]
+- **Scenario**: [one line description]
 
-## 问题/背景
-
-[user input]
-
-## 解决方案
+## Problem/Background
 
 [user input]
 
-## 注意事项
+## Solution
+
+[user input]
+
+## Notes
 
 [user input]
 ```
