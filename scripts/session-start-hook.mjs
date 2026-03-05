@@ -35,4 +35,7 @@ if (!existsSync(configPath)) {
       "Do NOT proceed with the original skill until dna-init has completed successfully.",
     ].join(" "),
   );
+} else {
+  // TeamDNA is initialized - minimal reminder
+  console.log("TeamDNA initialized. Use /teamdna:dna-search for team knowledge, /teamdna:dna-push to share learnings.");
 }
