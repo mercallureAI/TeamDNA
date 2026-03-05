@@ -38,7 +38,7 @@ If it fails, prompt user to check network or repository status.
 **3. Run graph generation script**
 
 ```bash
-node ~/.claude/plugins/teamdna/scripts/dna-graph.mjs
+node <teamdna-dir>/scripts/dna-graph.mjs
 ```
 
 The script reads the repo path from `~/.teamdna/config` internally and outputs:

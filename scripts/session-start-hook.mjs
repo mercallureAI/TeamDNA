@@ -13,7 +13,15 @@
 
 import { existsSync } from "node:fs";
 import { homedir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+// Derive plugin root from this script's location: <plugin-root>/scripts/session-start-hook.mjs
+const __filename = fileURLToPath(import.meta.url);
+const pluginRoot = dirname(dirname(__filename));
+
+// Always emit the plugin directory so Claude can locate scripts (e.g. dna-init.mjs, dna-index.mjs)
+console.log(`TeamDNA plugin installation directory <teamdna-dir> is: ${pluginRoot}`);
 
 const configPath = join(homedir(), ".teamdna", "config");
 
