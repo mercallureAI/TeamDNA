@@ -13,6 +13,15 @@
 
 import { existsSync } from "node:fs";
 import { getConfigPath } from "./paths.mjs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+// Derive plugin root from this script's location: <plugin-root>/scripts/session-start-hook.mjs
+const __filename = fileURLToPath(import.meta.url);
+const pluginRoot = dirname(dirname(__filename));
+
+// Always emit the plugin directory so Claude can locate scripts (e.g. dna-init.mjs, dna-index.mjs)
+console.log(`TeamDNA plugin installation directory <teamdna-dir> is: ${pluginRoot}`);
 
 const configPath = getConfigPath();
 
@@ -26,4 +35,7 @@ if (!existsSync(configPath)) {
       "Do NOT proceed with the original skill until dna-init has completed successfully.",
     ].join(" "),
   );
+} else {
+  // TeamDNA is initialized - minimal reminder
+  console.log("TeamDNA initialized. Use /teamdna:dna-search for team knowledge, /teamdna:dna-push to share learnings.");
 }

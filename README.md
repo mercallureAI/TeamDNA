@@ -34,6 +34,7 @@ In Claude Code, use these commands:
 | `/teamdna:dna-push`             | Share new experience (interactive)           |
 | `/teamdna:dna-pull`             | Sync latest knowledge                        |
 | `/teamdna:dna-index`            | Rebuild search index                         |
+| `/teamdna:dna-graph`            | Generate knowledge graph visualization       |
 
 ## Knowledge Repo Structure
 
