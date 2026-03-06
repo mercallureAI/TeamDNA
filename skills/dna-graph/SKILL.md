@@ -19,18 +19,14 @@ Display complete knowledge graph.
 
 ## Implementation Steps
 
-**1. Read configuration**
+**1. Get repo path**
 
-```bash
-cat ~/.teamdna/config
-```
-
-Parse `repo_path` field. If config doesn't exist, prompt user to run `/teamdna:dna-init`.
+Get `<teamdna-repo-dir>` from session context
 
 **2. Sync knowledge base**
 
 ```bash
-git -C <repo_path> pull
+git -C <teamdna-repo-dir> pull
 ```
 
 If it fails, prompt user to check network or repository status.
@@ -38,10 +34,10 @@ If it fails, prompt user to check network or repository status.
 **3. Run graph generation script**
 
 ```bash
-node <teamdna-dir>/scripts/dna-graph.mjs
+node <teamdna-scripts-dir>/dna-graph.mjs
 ```
 
-The script reads the repo path from `~/.teamdna/config` internally and outputs:
+The script reads the data repo and outputs:
 - Statistics (entry count, relationship count)
 - Mermaid chart syntax
 - Legend with entry counts by type
