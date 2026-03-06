@@ -2,11 +2,12 @@
 // dna-graph.mjs — Generate knowledge graph from index
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { homedir } from 'node:os';
 import { createHash } from 'node:crypto';
+import { getConfigPath } from "./paths.mjs";
+
 
 // Constants
-const CONFIG_FILE = join(homedir(), '.teamdna', 'config');
+const CONFIG_FILE = getConfigPath();
 const AFFINITY_TAG_WEIGHT = 2; // Weight multiplier for shared tags
 const AFFINITY_TYPE_BONUS = 1; // Bonus for pitfall-solution relationships
 const THRESHOLD_SMALL = 2; // Affinity threshold for small graphs
