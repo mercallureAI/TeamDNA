@@ -23,9 +23,6 @@ const pluginRoot = dirname(dirname(__filename));
 // Emit scripts directory so Claude can locate scripts (e.g. dna-init.mjs, dna-index.mjs)
 console.log(`TeamDNA scripts directory <teamdna-scripts-dir> is: ${join(pluginRoot, "scripts")}`);
 
-// Emit config directory so skills can reference it from context
-console.log(`TeamDNA config directory <teamdna-config-dir> is: ${getConfigDir()}`);
-
 const configPath = getConfigPath();
 
 // If config doesn't exist, instruct Claude to remind user on any TeamDNA skill usage

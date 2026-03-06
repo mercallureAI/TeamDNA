@@ -37,7 +37,7 @@ If it fails, prompt user to check network or repository status.
 node <teamdna-scripts-dir>/dna-graph.mjs
 ```
 
-The script reads the repo path from `<teamdna-config-dir>/config` internally and outputs:
+The script reads the data repo and outputs:
 - Statistics (entry count, relationship count)
 - Mermaid chart syntax
 - Legend with entry counts by type
