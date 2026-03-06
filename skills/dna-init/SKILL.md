@@ -46,10 +46,15 @@ Guide user through first-time TeamDNA setup: clone knowledge repo and write conf
      - Default (macOS/Windows): `~/.teamdna/repo`
      - Custom: any absolute path
 
-3. **Run initialization script**:
+3. **Run initialization script and set repo dir**:
    ```bash
-   node <teamdna-dir>/scripts/dna-init.mjs <repo-url> [clone-path]
+   node <teamdna-scripts-dir>/dna-init.mjs <repo-url> [clone-path]
    ```
+   After the script succeeds, set `<teamdna-repo-dir>` to the clone path used:
+   - If a custom `clone-path` was provided, use that
+   - Otherwise use the platform default:
+     - Linux: `$XDG_DATA_HOME/teamdna` (typically `~/.local/share/teamdna`)
+     - macOS/Windows: `~/.teamdna/repo`
 
 4. **Explain what happened**:
    - Knowledge repo cloned/pulled to specified path

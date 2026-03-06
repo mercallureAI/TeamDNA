@@ -10,8 +10,8 @@ Interactively guide user to create and push a knowledge entry.
 
 ## Steps
 
-1. Read `~/.teamdna/config` to get `repo_path`
-2. Run `git -C <repo_path> pull`
+1. Get `<teamdna-repo-dir>` from session context
+2. Run `git -C <teamdna-repo-dir> pull`
 3. Ask user for:
    - Type: pitfalls / standards / solutions
    - Title, tags, scenario description
@@ -42,9 +42,9 @@ Interactively guide user to create and push a knowledge entry.
 5. Auto-determine file path based on type and content (e.g. `pitfalls/docker/2025-06-15-xxx.md`), present to user for confirmation
 6. Write file, then run:
    ```
-   git -C <repo_path> add .
-   git -C <repo_path> commit -m "add: [title]"
-   git -C <repo_path> push
+   git -C <teamdna-repo-dir> add .
+   git -C <teamdna-repo-dir> commit -m "add: [title]"
+   git -C <teamdna-repo-dir> push
    ```
-7. If push fails due to conflict, run `git -C <repo_path> pull --rebase` and retry push
-8. After successful push, rebuild index by running `node <teamdna-dir>/scripts/dna-index.mjs <repo_path>`, then commit and push the updated index
+7. If push fails due to conflict, run `git -C <teamdna-repo-dir> pull --rebase` and retry push
+8. After successful push, rebuild index by running `node <teamdna-scripts-dir>/dna-index.mjs <teamdna-repo-dir>`, then commit and push the updated index

@@ -28,22 +28,14 @@ Uses a two-stage search strategy: keyword pre-filtering + Claude semantic unders
 
 ### Phase 1: Keyword Pre-filtering
 
-**1. Read Configuration**
+**1. Get Repo Path**
 
-Read config from platform-specific location:
-- Linux: `$XDG_CONFIG_HOME/teamdna/config` (typically `~/.config/teamdna/config`)
-- macOS/Windows: `~/.teamdna/config`
-
-```bash
-cat <config-path>
-```
-
-Parse the `repo_path` field. If config doesn't exist, invoke the `/teamdna:dna-init` skill to initialize configuration.
+Get `<teamdna-repo-dir>` from session context. If not available, invoke the `/teamdna:dna-init` skill to initialize configuration.
 
 **2. Sync Knowledge Base**
 
 ```bash
-git -C <repo_path> pull
+git -C <teamdna-repo-dir> pull
 ```
 
 If it fails, prompt user to check network or repository status.
@@ -51,7 +43,7 @@ If it fails, prompt user to check network or repository status.
 **3. Read Index**
 
 ```bash
-cat <repo_path>/.teamdna/index.md
+cat <teamdna-repo-dir>/.teamdna/index.md
 ```
 
 If index doesn't exist, invoke the `/teamdna:dna-index` skill to rebuild the index.
@@ -61,7 +53,7 @@ If index doesn't exist, invoke the `/teamdna:dna-index` skill to rebuild the ind
 Use `grep` to search for user keywords in the index (case-insensitive):
 
 ```bash
-grep -i "<keyword>" <repo_path>/.teamdna/index.md
+grep -i "<keyword>" <teamdna-repo-dir>/.teamdna/index.md
 ```
 
 Count matching lines and branch based on result count:
@@ -82,7 +74,7 @@ Extract file paths (first column) from matching index lines.
 For each candidate path, read the complete Markdown file:
 
 ```bash
-cat <repo_path>/<entry_path>
+cat <teamdna-repo-dir>/<entry_path>
 ```
 
 **3. Build Semantic Analysis Prompt**
@@ -152,7 +144,7 @@ If user wants to view full content of an entry, read and display the correspondi
 Directly read and return the full content of the entry:
 
 ```bash
-cat <repo_path>/<entry_path>
+cat <teamdna-repo-dir>/<entry_path>
 ```
 
 Display format:
@@ -175,7 +167,7 @@ Suggestions:
 2. Check if spelling is correct
 3. Invoke the `/teamdna:dna-pull` skill to sync latest knowledge base
 4. Browse index file to see all available entries:
-   cat <repo_path>/.teamdna/index.md
+   cat <teamdna-repo-dir>/.teamdna/index.md
 ```
 
 ## Error Handling
