@@ -16,7 +16,11 @@ Guide user through first-time TeamDNA setup: clone knowledge repo and write conf
 
 **Arguments (optional):**
 - `repo-url` — Team knowledge repository URL (e.g., `https://github.com/your-team/knowledge-repo.git`)
-- `clone-path` — Custom clone location (default: `~/teamdna-repo`)
+- `clone-path` — Custom clone location (default: platform-specific, see below)
+
+**Default locations (XDG-compliant on Linux):**
+- Linux: `$XDG_DATA_HOME/teamdna` (typically `~/.local/share/teamdna`)
+- macOS/Windows: `~/.teamdna/repo`
 
 **Quoting rule:** If `clone-path` contains spaces, wrap it in double quotes (e.g., `"/path/with spaces/teamdna"`).
 
@@ -38,17 +42,25 @@ Guide user through first-time TeamDNA setup: clone knowledge repo and write conf
    - Ask user for their team's knowledge repository URL
      - Example: `https://github.com/your-team/knowledge-repo.git`
    - Ask if they want a custom clone path (optional)
-     - Default: `~/teamdna-repo`
+     - Default (Linux): `$XDG_DATA_HOME/teamdna` (typically `~/.local/share/teamdna`)
+     - Default (macOS/Windows): `~/.teamdna/repo`
      - Custom: any absolute path
 
-3. **Run initialization script**:
+3. **Run initialization script and set repo dir**:
    ```bash
-   node <teamdna-dir>/scripts/dna-init.mjs <repo-url> [clone-path]
+   node <teamdna-scripts-dir>/dna-init.mjs <repo-url> [clone-path]
    ```
+   After the script succeeds, set `<teamdna-repo-dir>` to the clone path used:
+   - If a custom `clone-path` was provided, use that
+   - Otherwise use the platform default:
+     - Linux: `$XDG_DATA_HOME/teamdna` (typically `~/.local/share/teamdna`)
+     - macOS/Windows: `~/.teamdna/repo`
 
 4. **Explain what happened**:
    - Knowledge repo cloned/pulled to specified path
-   - Config written to `~/.teamdna/config`
+   - Config written to platform-specific location:
+     - Linux: `$XDG_CONFIG_HOME/teamdna/config` (typically `~/.config/teamdna/config`)
+     - macOS/Windows: `~/.teamdna/config`
    - Skills available as `/teamdna:dna-search`, `/teamdna:dna-push`, etc.
 
 5. **Suggest next steps**:

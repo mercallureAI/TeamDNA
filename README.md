@@ -34,6 +34,7 @@ In Claude Code, use these commands:
 | `/teamdna:dna-push`             | Share new experience (interactive)           |
 | `/teamdna:dna-pull`             | Sync latest knowledge                        |
 | `/teamdna:dna-index`            | Rebuild search index                         |
+| `/teamdna:dna-graph`            | Generate knowledge graph visualization       |
 
 ## Knowledge Repo Structure
 
@@ -44,6 +45,18 @@ teamdna-repo/
 ├── standards/                # Team conventions
 └── solutions/                # Proven solutions
 ```
+
+## File Locations
+
+TeamDNA follows platform conventions for storing configuration and data:
+
+**Linux (XDG-compliant):**
+- Config: `$XDG_CONFIG_HOME/teamdna/config` (typically `~/.config/teamdna/config`)
+- Data: `$XDG_DATA_HOME/teamdna` (typically `~/.local/share/teamdna`)
+
+**macOS/Windows:**
+- Config: `~/.teamdna/config`
+- Data: `~/.teamdna/repo`
 
 ## Entry Template
 
