@@ -1,0 +1,20 @@
+{
+  "name": "@mercallureai/teamdna-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for TeamDNA - team knowledge sharing tools",
+  "type": "module",
+  "bin": {
+    "teamdna-mcp": "./server.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mercallureAI/TeamDNA.git",
+    "directory": "mcp-server"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1"
+  }
+}

@@ -36,6 +36,54 @@ In Claude Code, use these commands:
 | `/teamdna:dna-index`            | Rebuild search index                         |
 | `/teamdna:dna-graph`            | Generate knowledge graph visualization       |
 
+## MCP Server
+
+TeamDNA includes an MCP (Model Context Protocol) server alongside its skills. While skills provide interactive workflows (search, push, pull), the MCP server exposes programmatic tools that AI agents can call directly.
+
+The server is published as a separate npm package (`@mercallureai/teamdna-mcp`) to GitHub Packages. When the plugin is installed, Claude Code auto-starts the MCP server via `npx` -- no manual setup needed.
+
+**Current tools:**
+
+| Tool | Description |
+|------|-------------|
+| `teamdna_status` | Check initialization status, config paths, and repo location |
+
+### MCP Development Guide
+
+**Local setup:**
+
+```bash
+cd mcp-server
+npm install
+```
+
+**Test locally:**
+
+```bash
+# Send an initialize + tools/list request over stdio
+printf '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test","version":"1.0.0"}}}\n{"jsonrpc":"2.0","method":"notifications/initialized"}\n{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}\n' | node mcp-server/server.mjs
+```
+
+**Add a new tool:**
+
+In `mcp-server/server.mjs`, add a `server.tool()` call:
+
+```js
+server.tool("tool_name", "description", { /* zod schema */ }, async (params) => {
+  // call script logic or spawn process
+  return { content: [{ type: "text", text: result }] };
+});
+```
+
+**Publish to GitHub Packages:**
+
+```bash
+cd mcp-server
+npm publish
+```
+
+Requires authentication to the GitHub npm registry. See [GitHub Packages docs](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry).
+
 ## Knowledge Repo Structure
 
 ```text
