@@ -10,7 +10,6 @@ Scan all MD files in the knowledge repo and regenerate `.teamdna/index.md`.
 
 ## Steps
 
-1. Read `~/.teamdna/config` to get `repo_path`
-2. Locate the `dna-index.mjs` script in the TeamDNA install directory
-3. Run `node <teamdna-dir>/scripts/dna-index.mjs <repo_path>`
-4. Report result to user
+1. Get `<teamdna-scripts-dir>` and `<teamdna-repo-dir>` from session context
+2. Run `node <teamdna-scripts-dir>/dna-index.mjs <teamdna-repo-dir>`
+3. Report result to user

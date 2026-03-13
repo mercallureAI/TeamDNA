@@ -25,15 +25,15 @@ for (const dir of ['pitfalls', 'standards', 'solutions']) {
     const lines = readFileSync(file, 'utf-8').split(/\r?\n/);
     const titleLine = lines.find(l => l.startsWith('# '));
     const title = titleLine ? titleLine.slice(2).trim() : basename(file, '.md');
-    const tagsLine = lines.find(l => /^- \*\*标签\*\*:/.test(l));
-    const tags = tagsLine ? tagsLine.replace(/^- \*\*标签\*\*:\s*/, '') : '-';
-    const sceneLine = lines.find(l => /^- \*\*场景\*\*:/.test(l));
-    const scene = sceneLine ? sceneLine.replace(/^- \*\*场景\*\*:\s*/, '') : '-';
+    const tagsLine = lines.find(l => /^- \*\*Tags\*\*:/.test(l));
+    const tags = tagsLine ? tagsLine.replace(/^- \*\*Tags\*\*:\s*/, '') : '-';
+    const sceneLine = lines.find(l => /^- \*\*Scenario\*\*:/.test(l));
+    const scene = sceneLine ? sceneLine.replace(/^- \*\*Scenario\*\*:\s*/, '') : '-';
     const relpath = relative(REPO_DIR, file).replace(/\\/g, '/');
     rows.push(`| ${title} | ${tags} | ${relpath} | ${scene} |`);
   }
 }
 
-const output = ['| 标题 | 标签 | 路径 | 摘要 |', '|------|------|------|------|', ...rows, ''].join('\n');
+const output = ['| Title | Tags | Path | Summary |', '|-------|------|------|---------|', ...rows, ''].join('\n');
 writeFileSync(INDEX_FILE, output, 'utf-8');
 console.log(`[dna-index] Index rebuilt: ${INDEX_FILE}`);

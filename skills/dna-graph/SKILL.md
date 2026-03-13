@@ -31,18 +31,14 @@ Shows complete ASCII graph with all entries and connections.
 
 ## Implementation Steps
 
-**1. Read configuration**
+**1. Get repo path**
 
-```bash
-cat ~/.teamdna/config
-```
-
-Parse `repo_path` field. If config doesn't exist, prompt user to run `/teamdna:dna-init`.
+Get `<teamdna-repo-dir>` from session context
 
 **2. Sync knowledge base**
 
 ```bash
-git -C <repo_path> pull
+git -C <teamdna-repo-dir> pull
 ```
 
 If it fails, prompt user to check network or repository status.
@@ -50,7 +46,7 @@ If it fails, prompt user to check network or repository status.
 **3. Run graph generation script**
 
 ```bash
-node <teamdna-dir>/scripts/dna-graph.mjs [--full]
+node <teamdna-scripts-dir>/dna-graph.mjs [--full]
 ```
 
 The script automatically detects dataset size:

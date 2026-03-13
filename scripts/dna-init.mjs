@@ -3,7 +3,7 @@
 import { execSync } from 'node:child_process';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { homedir } from 'node:os';
+import { getConfigDir, getDefaultDataDir } from './paths.mjs';
 
 const REPO_URL = process.argv[2];
 if (!REPO_URL) {
@@ -11,8 +11,8 @@ if (!REPO_URL) {
   process.exit(1);
 }
 
-const CLONE_DIR = process.argv[3] || join(homedir(), 'teamdna-repo');
-const CONFIG_DIR = join(homedir(), '.teamdna');
+const CONFIG_DIR = getConfigDir();
+const CLONE_DIR = process.argv[3] || getDefaultDataDir();
 
 // 1. Clone or pull
 if (existsSync(CLONE_DIR)) {
