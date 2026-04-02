@@ -3,11 +3,9 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
-import { getConfigPath } from "./paths.mjs";
-
+import { readConfig } from "./paths.mjs";
 
 // Constants
-const CONFIG_FILE = getConfigPath();
 const AFFINITY_TAG_WEIGHT = 2; // Weight multiplier for shared tags
 const AFFINITY_TYPE_BONUS = 1; // Bonus for pitfall-solution relationships
 const THRESHOLD_SMALL = 2; // Affinity threshold for small graphs
@@ -18,24 +16,13 @@ const MAX_EDGE_TAGS = 2; // Maximum tags to display on edges
 const VALID_TYPES = ['pitfalls', 'solutions', 'standards']; // Valid entry types
 
 // Read config
-if (!existsSync(CONFIG_FILE)) {
+const config = readConfig();
+if (!config) {
   console.error('Error: TeamDNA not initialized. Run /teamdna:dna-init first.');
   process.exit(1);
 }
 
-let config;
-try {
-  config = readFileSync(CONFIG_FILE, 'utf-8');
-} catch (err) {
-  console.error(`Error: Cannot read config file: ${err.message}`);
-  process.exit(1);
-}
-
-const repoPath = config.match(/repo_path=(.+)/)?.[1]?.trim();
-if (!repoPath) {
-  console.error('Error: Invalid config file.');
-  process.exit(1);
-}
+const repoPath = config.repoPath;
 
 const INDEX_FILE = join(repoPath, '.teamdna', 'index.md');
 

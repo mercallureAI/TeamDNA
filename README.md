@@ -42,11 +42,17 @@ TeamDNA includes an MCP (Model Context Protocol) server alongside its skills. Wh
 
 The server is published as a separate npm package (`@mercallureai/teamdna-mcp`) to GitHub Packages. When the plugin is installed, Claude Code auto-starts the MCP server via `npx` -- no manual setup needed.
 
-**Current tools:**
+**Tools:**
 
 | Tool | Description |
 |------|-------------|
 | `teamdna_status` | Check initialization status, config paths, and repo location |
+| `teamdna_init` | Initialize TeamDNA: clone a team knowledge repo and write config |
+| `teamdna_search` | Search knowledge base by keyword, returns entries with full content |
+| `teamdna_push` | Create and push a new knowledge entry to the team repo |
+| `teamdna_pull` | Sync the team knowledge base (git pull) |
+| `teamdna_index` | Rebuild the search index (.teamdna/index.md) |
+| `teamdna_graph` | Generate knowledge graph visualization |
 
 ### MCP Development Guide
 
@@ -66,10 +72,13 @@ printf '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion
 
 **Add a new tool:**
 
-In `mcp-server/server.mjs`, add a `server.tool()` call:
+In `mcp-server/server.mjs`, add a `server.registerTool()` call:
 
 ```js
-server.tool("tool_name", "description", { /* zod schema */ }, async (params) => {
+server.registerTool("tool_name", {
+  description: "description",
+  inputSchema: { /* zod schema */ },
+}, async (params) => {
   // call script logic or spawn process
   return { content: [{ type: "text", text: result }] };
 });

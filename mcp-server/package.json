@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "MCP server for TeamDNA - team knowledge sharing tools",
   "type": "module",
+  "scripts": {
+    "test": "node --test test.mjs"
+  },
   "bin": {
     "teamdna-mcp": "./server.mjs"
   },
