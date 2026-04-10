@@ -1,5 +1,11 @@
 {
   "name": "teamdna",
   "description": "Git-based team knowledge sharing system",
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "mcpServers": {
+    "teamdna": {
+      "command": "npx",
+      "args": ["-y", "@mercallureai/teamdna-mcp"]
+    }
+  }
 }

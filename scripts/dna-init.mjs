@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 // dna-init.mjs — Initialize TeamDNA: clone repo, write config
 import { execSync } from 'node:child_process';
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
-import { getConfigDir, getDefaultDataDir } from './paths.mjs';
+import { existsSync } from 'node:fs';
+import { getConfigDir, getDefaultDataDir, writeConfig } from './paths.mjs';
 
 const REPO_URL = process.argv[2];
 if (!REPO_URL) {
@@ -11,7 +10,6 @@ if (!REPO_URL) {
   process.exit(1);
 }
 
-const CONFIG_DIR = getConfigDir();
 const CLONE_DIR = process.argv[3] || getDefaultDataDir();
 
 // 1. Clone or pull
@@ -24,8 +22,7 @@ if (existsSync(CLONE_DIR)) {
 }
 
 // 2. Write config
-mkdirSync(CONFIG_DIR, { recursive: true });
-writeFileSync(join(CONFIG_DIR, 'config'), `repo_path=${CLONE_DIR}\n`);
-console.log(`[dna-init] Config written to ${CONFIG_DIR}/config`);
+writeConfig(CLONE_DIR);
+console.log(`[dna-init] Config written to ${getConfigDir()}/config`);
 
 console.log('[dna-init] Done! Use /teamdna:dna-search, /teamdna:dna-push, /teamdna:dna-pull, /teamdna:dna-index in Claude Code.');

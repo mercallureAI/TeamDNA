@@ -1,6 +1,7 @@
-// paths.mjs — Platform-appropriate directory paths for TeamDNA
+// paths.mjs — Platform-appropriate directory paths and config helpers for TeamDNA
 import { homedir, platform } from 'node:os';
 import { join } from 'node:path';
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 
 /**
  * Get config directory path (XDG-compliant on Linux)
@@ -30,3 +31,34 @@ export const getDefaultDataDir = () => {
  * Get config file path
  */
 export const getConfigPath = () => join(getConfigDir(), 'config');
+
+/**
+ * Read TeamDNA config file.
+ * Returns { repoPath, configPath, configDir } or null if not initialized.
+ */
+export function readConfig() {
+  const configPath = getConfigPath();
+  if (!existsSync(configPath)) return null;
+  const content = readFileSync(configPath, 'utf-8');
+  const repoPath = content.match(/repo_path=(.+)/)?.[1]?.trim();
+  if (!repoPath) return null;
+  return { repoPath, configPath, configDir: getConfigDir() };
+}
+
+/**
+ * Get repo path from config, throwing if not initialized.
+ */
+export function getRepoPath() {
+  const config = readConfig();
+  if (!config) throw new Error('TeamDNA is not initialized. Call teamdna_init with your team\'s Git repo URL.');
+  return config.repoPath;
+}
+
+/**
+ * Write TeamDNA config file with the given repo path.
+ */
+export function writeConfig(repoPath) {
+  const configDir = getConfigDir();
+  mkdirSync(configDir, { recursive: true });
+  writeFileSync(join(configDir, 'config'), `repo_path=${repoPath}\n`);
+}
