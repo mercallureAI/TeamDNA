@@ -11,9 +11,14 @@ const AFFINITY_TYPE_BONUS = 1; // Bonus for pitfall-solution relationships
 const THRESHOLD_SMALL = 2; // Affinity threshold for small graphs
 const THRESHOLD_LARGE = 3; // Affinity threshold for large graphs
 const LARGE_GRAPH_SIZE = 20; // Size threshold to switch to stricter filtering
+const SUMMARY_MODE_THRESHOLD = 50; // Entry count to trigger summary mode
 const MAX_LABEL_LENGTH = 30; // Maximum characters in node labels
 const MAX_EDGE_TAGS = 2; // Maximum tags to display on edges
 const VALID_TYPES = ['pitfalls', 'solutions', 'standards']; // Valid entry types
+
+// Parse command line arguments
+const args = process.argv.slice(2);
+const forceFullMode = args.includes('--full');
 
 // Read config
 const config = readConfig();
@@ -61,7 +66,11 @@ for (const line of lines) {
     console.warn(`Warning: Unknown entry type "${type}" for ${title}`);
   }
 
-  entries.push({ title, tags, path, type });
+  // Extract domain from path (backend/frontend/typescript/etc)
+  const pathParts = path.split('/');
+  const domain = pathParts.length > 1 ? pathParts[1] : 'unknown';
+
+  entries.push({ title, tags, path, type, domain });
 }
 
 console.log(`[dna-graph] Loaded ${entries.length} entries`);
@@ -133,8 +142,114 @@ const typeCount = {
 
 console.log(`Knowledge Graph (${entries.length} entries, ${relationships.length} relationships)\n`);
 
-// Generate ASCII graph
-function renderAsciiGraph() {
+// Determine output mode
+const useSummaryMode = entries.length >= SUMMARY_MODE_THRESHOLD && !forceFullMode;
+
+if (useSummaryMode) {
+  console.log('📊 Summary Mode (use --full flag for detailed view)\n');
+  renderSummaryView();
+} else {
+  renderFullView();
+}
+
+// Summary view for large datasets
+function renderSummaryView() {
+  const output = [];
+
+  // 1. Domain Statistics
+  output.push('═══ Domain Overview ═══\n');
+  const domainStats = {};
+  entries.forEach(e => {
+    if (!domainStats[e.domain]) {
+      domainStats[e.domain] = { pitfalls: 0, solutions: 0, standards: 0, total: 0 };
+    }
+    domainStats[e.domain][e.type]++;
+    domainStats[e.domain].total++;
+  });
+
+  Object.entries(domainStats)
+    .sort((a, b) => b[1].total - a[1].total)
+    .forEach(([domain, stats]) => {
+      output.push(`📁 ${domain.toUpperCase()}: ${stats.total} entries`);
+      output.push(`   🔴 ${stats.pitfalls} pitfalls  🟢 ${stats.solutions} solutions  🔵 ${stats.standards} standards`);
+    });
+
+  // 2. Knowledge Hubs (most connected entries)
+  output.push('\n═══ Knowledge Hubs (Top 10 Most Connected) ═══\n');
+  const connectionCount = new Map();
+  entries.forEach((_, i) => connectionCount.set(i, 0));
+
+  relationships.forEach(rel => {
+    connectionCount.set(rel.from, connectionCount.get(rel.from) + 1);
+    connectionCount.set(rel.to, connectionCount.get(rel.to) + 1);
+  });
+
+  const hubs = Array.from(connectionCount.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10);
+
+  const typeSymbol = { pitfalls: '🔴', solutions: '🟢', standards: '🔵' };
+  hubs.forEach(([idx, count], rank) => {
+    const entry = entries[idx];
+    const symbol = typeSymbol[entry.type] || '⚪';
+    output.push(`${rank + 1}. ${symbol} ${entry.title}`);
+    output.push(`   ${count} connections | Domain: ${entry.domain} | Tags: ${entry.tags.slice(0, 3).join(', ')}`);
+  });
+
+  // 3. Tag Frequency Analysis
+  output.push('\n═══ Top Tags ═══\n');
+  const tagFreq = {};
+  entries.forEach(e => {
+    e.tags.forEach(tag => {
+      tagFreq[tag] = (tagFreq[tag] || 0) + 1;
+    });
+  });
+
+  Object.entries(tagFreq)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 15)
+    .forEach(([tag, count]) => {
+      const bar = '█'.repeat(Math.ceil(count / 5));
+      output.push(`${tag.padEnd(25)} ${bar} ${count}`);
+    });
+
+  // 4. Cross-Domain Relationships
+  output.push('\n═══ Cross-Domain Relationships ═══\n');
+  const crossDomain = {};
+  relationships.forEach(rel => {
+    const domain1 = entries[rel.from].domain;
+    const domain2 = entries[rel.to].domain;
+    if (domain1 !== domain2) {
+      const key = [domain1, domain2].sort().join(' ↔ ');
+      crossDomain[key] = (crossDomain[key] || 0) + 1;
+    }
+  });
+
+  if (Object.keys(crossDomain).length > 0) {
+    Object.entries(crossDomain)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10)
+      .forEach(([pair, count]) => {
+        output.push(`${pair}: ${count} connections`);
+      });
+  } else {
+    output.push('No cross-domain relationships found.');
+  }
+
+  // 5. Type Distribution
+  output.push('\n═══ Overall Statistics ═══\n');
+  output.push(`Total Entries: ${entries.length}`);
+  output.push(`Total Relationships: ${relationships.length}`);
+  output.push(`Average Connections per Entry: ${(relationships.length * 2 / entries.length).toFixed(1)}`);
+  output.push(`\n🔴 Pitfalls: ${typeCount.pitfalls}`);
+  output.push(`🟢 Solutions: ${typeCount.solutions}`);
+  output.push(`🔵 Standards: ${typeCount.standards}`);
+
+  console.log(output.join('\n'));
+}
+
+// Full view (original ASCII graph)
+function renderFullView() {
   const output = [];
 
   // Type symbols
@@ -185,10 +300,11 @@ function renderAsciiGraph() {
   return output.join('\n');
 }
 
-console.log(renderAsciiGraph());
-
-console.log(`Legend:`);
-console.log(`🔴 Pitfalls - ${typeCount.pitfalls} entries`);
-console.log(`🟢 Solutions - ${typeCount.solutions} entries`);
-console.log(`🔵 Standards - ${typeCount.standards} entries`);
+if (!useSummaryMode) {
+  console.log(renderFullView());
+  console.log(`\nLegend:`);
+  console.log(`🔴 Pitfalls - ${typeCount.pitfalls} entries`);
+  console.log(`🟢 Solutions - ${typeCount.solutions} entries`);
+  console.log(`🔵 Standards - ${typeCount.standards} entries`);
+}
 
